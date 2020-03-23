@@ -58,11 +58,11 @@ def URLify(string):
 
     return "%20".join(strip_str.split(" "))
 
-
 print("test 'hello beautiful world       ' -> 'hello%20beautiful%20world'")
 print(URLify("hello beautiful world       "))
 print("test 'hello   ' -> 'hello'")
 print(URLify("hello   "))
+
 
 
 def palindrome_permutation(string):
@@ -92,6 +92,178 @@ print("test 'Tact Coa' -> True")
 print(palindrome_permutation("Tact Coa"))
 
 
+
+def one_away(string1, string2):
+    """Check if the strings are one or less edits away."""
+
+    char_counts = {}
+
+    for char in string1:
+        char_counts[char] = char_counts.get(char, 0) + 1
+
+    count_different = False
+
+    for char in string2:
+        if char_counts.get(char) == None:
+            if count_different == True:
+                return False
+            count_different = True
+        else:
+            if char_counts.get(char) == 1:
+                del char_counts[char]
+            else:
+                char_counts.get(char) -+ 1
+
+    if count_different == False:
+        if len(char_counts) > 1:
+            return False
+
+    return True
+
+def one_away2(string1, string2):
+    """Check if the strings are one or less edits away."""
+
+    if len(string1) == len(string2):
+        return check_replace(string1, string2)
+    elif len(string1) - len(string2) == 1:
+        return check_insert_or_removal(string1, string2)
+    elif len(string1) - len(string2) == -1:
+        return check_insert_or_removal(string2, string1)
+    else:
+        return False
+
+def check_replace(string1, string2):
+    """Check if the strings have only one letter different."""
+
+    count_different = False
+
+    for (s1, s2) in zip(string1, string2):
+        if s1 != s2:
+            if count_different == True:
+                return False
+            count_different = True
+
+    return True
+
+def check_insert_or_removal(string1, string2):
+    """Check that strings are equal except one insert or removal."""
+
+    i, j = 0, 0
+    edited = False
+
+    while i < len(string1) and j < len(string2):
+        if string1[i] != string2[j]:
+            if edited:
+                return False
+            edited == True
+            i += 1
+        else:
+            i += 1
+            j += 1
+
+    return True
+
+print("test 'pale', 'ple' -> True")
+print(one_away2("pale", "ple"))
+print("test 'pales', 'pale' -> True")
+print(one_away2("pales", "pale"))
+print("test 'pale', 'bale' -> True")
+print(one_away2("pale", "bale"))
+print("test 'pale', 'bake' -> False")
+print(one_away2("pale", "bake"))
+
+
+
+def string_compression(string):
+    """Compress a string using counts of repeated characters."""
+
+    letter = string[0]
+    letter_count = 0
+    compressed_list = []
+
+    for char in string:
+        if char == letter:
+            letter_count += 1
+        else:
+            compressed_list.append(f"{letter}{letter_count}")
+            letter = char
+            letter_count = 1
+
+    compressed_list.append(f"{letter}{letter_count}")
+
+    return min("".join(compressed_list), string, key=len)
+
+print("test 'aabcccccaaa' -> 'a2b1c5a3'")
+print(string_compression("aabcccccaaa"))
+print("test 'abcde' -> 'abcde'")
+print(string_compression("abcde"))
+
+
+
+def rotate_matrix(matrix):
+    """Rotate matrix by 90 degrees."""
+
+    pass
+
+    
+orig_matrix = [[1, 2, 3, 4, 5],
+               [6, 7, 8, 9, 10],
+               [11, 12, 13, 14, 15],
+               [16, 17, 18, 19, 20],
+               [21, 22, 23, 24, 25]]
+rotated_matrix = [[21, 16, 11, 6, 1],
+                  [22, 17, 12, 7, 2],
+                  [23, 18, 13, 8, 3],
+                  [24, 19, 14, 9, 4],
+                  [25, 20, 15, 10, 5]]
+print(f"test {orig_matrix} -> {rotated_matrix}")
+print(rotate_matrix(orig_matrix))
+
+
+
+def zero_matrix(matrix):
+    """If a matrix element is 0, set its entire row and column to 0."""
+
+    zero_coords = []
+    nrows = range(len(matrix))
+    ncols = range(len(matrix[0]))
+
+    for i in nrows:
+        for j in ncols:
+            if matrix[i][j] == 0:
+                zero_coords.append((i, j))
+
+    for row, col in zero_coords:
+        for i in ncols:
+            matrix[row][i] = 0
+        for j in nrows:
+            matrix[j][col] = 0
+
+    return matrix
+
+orig_matrix = [[1,  2,  0,  4,  5],
+               [6,  7,  8,  9,  10],
+               [11, 12, 13, 14, 15],
+               [16, 0,  18, 19, 20],
+               [21, 22, 23, 24, 25]]
+zerod_matrix = [[0,  0, 0, 0,  0],
+               [6,  0, 0, 9,  10],
+               [11, 0, 0, 14, 15],
+               [0,  0, 0, 0,  0],
+               [21, 0, 0, 24, 25]]
+
+print(f"test {orig_matrix} -> {zerod_matrix}")
+print(zero_matrix(orig_matrix))
+
+
+
+def string_rotation(s1, s2):
+    """Check if s2 is a rotation of s1 making a call to is_substring once."""
+    
+    pass
+
+print("test 'waterbottle', 'erbottlewat' -> True")
+print(string_rotation("waterbottle", "erbottlewat"))
 
 
 
