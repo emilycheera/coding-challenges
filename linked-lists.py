@@ -72,15 +72,37 @@ class LinkedList():
 
 
     def partition(self, partition):
-        
         pass
 
 
+    def is_palindrome(self):
+        pass
+
+        
 
 def delete_middle_node(node):
-
     node.data = node.next.data
     node.next = node.next.next
+
+
+def sum_lists(list1, list2):
+    return sum_one_list(list1) + sum_one_list(list2)
+
+def sum_one_list(lst):
+    mult = 1
+    list_sum = 0
+
+    current = lst.head
+
+    while current:
+        list_sum += (current.data * mult)
+        mult *= 10
+        current = current.next
+
+    return list_sum
+
+
+
 
 
 class Node():
@@ -116,7 +138,7 @@ f = Node("f")
 c.next = d
 d.next = e
 e.next = f
-print("Kth to Last Node:")
+print("Kth to Last Node -> e")
 print(ll.find_kth_to_last_node_runner(2))
 
 # Testing delete middle node
@@ -146,6 +168,43 @@ num_ll.print_nodes()
 print("Linked List After Partition:")
 num_ll.partition(5)
 num_ll.print_nodes()
+
+# Testing sum lists
+seven = Node(7)
+one = Node(1)
+six = Node(6)
+five = Node(5)
+nine = Node(9)
+two = Node(2)
+ll_1 = LinkedList(seven)
+ll_2 = LinkedList(five)
+seven.next = one
+one.next = six
+five.next = nine
+nine.next = two
+print("Sum Lists -> 912")
+print(sum_lists(ll_1, ll_2))
+
+# Testing palindrome
+b1 = Node("b")
+i = Node("i")
+b2 = Node("b")
+ll_bib = LinkedList(b1)
+b1.next = i
+i.next = b2
+r = Node("r")
+o = Node("o")
+c = Node("c")
+k = Node("k")
+ll_rock = LinkedList(r)
+r.next = o
+o.next = c
+c.next = k
+print("Test if bib is a palindrome -> True")
+print(ll_bib.palindrome())
+print("Test if rock is a palindrome -> False")
+print(ll_rock.palindrome())
+
 
 
 

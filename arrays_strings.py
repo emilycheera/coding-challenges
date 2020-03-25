@@ -201,11 +201,32 @@ print(string_compression("abcde"))
 
 
 def rotate_matrix(matrix):
-    """Rotate matrix by 90 degrees."""
+    """Rotate NxN matrix by 90 degrees."""
 
-    pass
+    length = len(matrix)
+    layers = length // 2
 
-    
+    for i in range(layers):
+        for j in range(i, length - 1 - i):
+
+            # Save top
+            top = matrix[i][j]
+
+            # Top = Left
+            matrix[i][j] = matrix[length - 1 - j][i]
+
+            # Left = Bottom
+            matrix[length - 1 - j][i] = matrix[length - 1 - i][length - 1 - j]
+
+            # Bottom = Right
+            matrix[length - 1 - i][length - 1 - j] = matrix[j][length - 1 - i]
+
+            # Right = Top
+            matrix[j][length - 1 - i] = top
+
+    return matrix
+
+# Tests    
 orig_matrix = [[1, 2, 3, 4, 5],
                [6, 7, 8, 9, 10],
                [11, 12, 13, 14, 15],
@@ -218,6 +239,7 @@ rotated_matrix = [[21, 16, 11, 6, 1],
                   [25, 20, 15, 10, 5]]
 print(f"test {orig_matrix} -> {rotated_matrix}")
 print(rotate_matrix(orig_matrix))
+print("************")
 
 
 
@@ -241,6 +263,7 @@ def zero_matrix(matrix):
 
     return matrix
 
+# Tests
 orig_matrix = [[1,  2,  0,  4,  5],
                [6,  7,  8,  9,  10],
                [11, 12, 13, 14, 15],
@@ -257,13 +280,19 @@ print(zero_matrix(orig_matrix))
 
 
 
+def is_substring(string, sub):
+    return sub in string
+
+
 def string_rotation(s1, s2):
     """Check if s2 is a rotation of s1 making a call to is_substring once."""
     
-    pass
+    return is_substring(s1+s1, s2)
 
 print("test 'waterbottle', 'erbottlewat' -> True")
 print(string_rotation("waterbottle", "erbottlewat"))
+print("test 'hello', 'helloo' -> False")
+print(string_rotation("hello", "helloo"))
 
 
 
