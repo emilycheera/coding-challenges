@@ -286,20 +286,12 @@ def is_substring(string, sub):
 
 def string_rotation(s1, s2):
     """Check if s2 is a rotation of s1 making a call to is_substring once."""
-    
     return is_substring(s1+s1, s2)
 
 print("test 'waterbottle', 'erbottlewat' -> True")
 print(string_rotation("waterbottle", "erbottlewat"))
 print("test 'hello', 'helloo' -> False")
 print(string_rotation("hello", "helloo"))
-
-
-
-
-
-
-
 
 
 

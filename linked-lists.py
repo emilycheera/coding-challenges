@@ -71,14 +71,59 @@ class LinkedList():
         return current
 
 
-    def partition(self, partition):
-        pass
+    def partition(self, x):
+        """Partition a linked list around x."""
+
+        current = self.tail = self.head
+        
+        while current:
+            next_node = current.next
+            current.next = None
+            
+            if current.data < x:
+                current.next = self.head
+                self.head = current
+            else:
+                self.tail.next = current
+                self.tail = current
+            
+            current = next_node
+
+        if self.tail.next is not None:
+            self.tail.next = None
 
 
     def is_palindrome(self):
-        pass
+        """Check if a linked list is a palindrome."""
 
+        length = self.get_length()
+        stack = [self.head.data]
+        current = self.head.next
+
+        if length % 2 == 0:
+            while current:
+                if stack[-1] == current.data:
+                    stack.pop()
+                else:
+                    stack.append(current.data)
+                current = current.next
         
+        else:
+            middle_node = length // 2
+            node_count = 1
+            while current:
+                if node_count == middle_node:
+                    current = current.next
+                else:
+                    if stack[-1] == current.data:
+                        stack.pop()
+                    else:
+                        stack.append(current.data)
+                    current = current.next
+                node_count += 1
+
+        return False if stack else True
+
 
 def delete_middle_node(node):
     node.data = node.next.data
@@ -102,7 +147,41 @@ def sum_one_list(lst):
     return list_sum
 
 
+def get_interesecting(linklist1, linklist2):
+    """Determine if two lists intersect and return the intersecting node."""
 
+    if linklist1.tail is not linklist2.tail:
+        return None
+
+    len_list1 = linklist1.get_length()
+    len_list2 = linklist2.get_length()
+
+    if len_list1 != len_list2:
+        difference = len_list1 - len_list2
+        if difference < 0:
+            move_head(linklist2, difference)
+        else:
+            move_head(linklist1, difference)
+            
+    return find_intersecting_node(linklist1, linklist2)
+
+
+def find_intersecting_node(list1, list2):
+    current1 = list1.head
+    current2 = list2.head
+
+    while current1 is not current2:
+        current1 = current1.next
+        current2 = current2.next
+
+    return current1
+
+
+def move_head(lst, difference):
+    current = lst.head
+    for i in range(difference):
+        lst.head = current.next
+        current = current.next
 
 
 class Node():
@@ -201,14 +280,26 @@ r.next = o
 o.next = c
 c.next = k
 print("Test if bib is a palindrome -> True")
-print(ll_bib.palindrome())
+print(ll_bib.is_palindrome())
 print("Test if rock is a palindrome -> False")
-print(ll_rock.palindrome())
+print(ll_rock.is_palindrome())
 
-
-
-
-
-
-
+# Testing intersection
+h = Node("h")
+e = Node("e")
+l1 = Node("l")
+l2 = Node("l")
+o = Node("o")
+w = Node("w")
+h.next = e
+e.next = l1
+l1.next = l2
+l2.next = o
+w.next = o
+ll1 = LinkedList(h, o)
+ll2 = LinkedList(w, o)
+print("Test intersection hello, wo -> Node o")
+print(get_interesecting(ll1, ll2))
+print("test intersection rock, bib -> None")
+print(get_interesecting(ll_rock, ll_bib))
 
