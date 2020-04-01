@@ -9,21 +9,20 @@ def match_secret_santas(people, last_years_matches):
 
     new_matches = {}
 
-    already_matched = set()
-
     for i in range(len(people)):
-        if i in already_matched:
+        if i in new_matches:
             continue
-        already_matched.add(i)
+        
         rand_match = randint(i + 1, len(people) - 1)
 
-        while rand_match in already_matched:
+        while rand_match in new_matches:
             rand_match = randint(i + 1, len(people) - 1)
 
         new_matches[i] = rand_match
         new_matches[rand_match] = i
-        already_matched.add(rand_match)
 
     return new_matches
+
+
 
 print(match_secret_santas(people, last_years_matches))
