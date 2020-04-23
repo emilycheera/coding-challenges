@@ -40,7 +40,7 @@ def make_dict_of_words(words):
     d = {}
 
     for w in words:
-        w_sort = "".join(sorted(list(w)))
+        w_sort = "".join(sorted(w))
         d[w_sort] = d.get(w_sort, []) + [w]
 
     return d
